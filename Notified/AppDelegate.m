@@ -57,10 +57,10 @@
     if (![self workspaceLoggerIsRunning])
         return;
     
-
     NSTextStorage *workspaceLoggerTextStorage   = [[self workspaceLogView] textStorage];
     NSAttributedString *tmp = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n",[notification name]]];
 
+    // avoid spamming the display
     if ([[notification name] isEqualToString:@"NSTextStorageDidProcessEditingNotification"] ||
         [[notification name] isEqualToString:@"NSTextStorageWillProcessEditingNotification"] ||
         [[notification name] isEqualToString:@"NSTextViewDidChangeTypingAttributesNotification"] ||
@@ -76,8 +76,6 @@
         [[notification name] isEqualToString:@"NSThreadWillExitNotification"])
         return;
 
-    NSLog(@"%@",notification);
-//    return;
     [workspaceLoggerTextStorage beginEditing];
     [workspaceLoggerTextStorage appendAttributedString:tmp];
     [workspaceLoggerTextStorage setFont:[NSFont fontWithName:@"Monaco" size:11]];
